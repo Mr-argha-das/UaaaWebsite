@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI, APIRouter
 
 from roles.models.rolesmodel import RolesModel, RolesTable
@@ -11,4 +12,13 @@ async def addRoles(body: RolesModel):
     return {
         "message" : "Roles Added",
         "status": True
+    }
+    
+@router.get("/api/v1/get-all-roles")
+async def getAllRoles():
+    data = RolesTable.objects.all()
+    tojson = data.to_json()
+    fromjson = json.loads(tojson)
+    return {
+     "data": fromjson
     }

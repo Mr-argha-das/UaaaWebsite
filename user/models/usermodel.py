@@ -17,3 +17,7 @@ class UserModel(BaseModel):
     couuntry_code:str
     password: str
     role_id : str
+    
+class UserLoginModel(BaseModel):
+    email :str
+    password:str

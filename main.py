@@ -5,6 +5,7 @@ from currency.routes import currencyroutes
 from roles.routes import roloes
 from services.routes import serviceroutes
 from user.routes import userroutes
+from pages.admin import login
 connect('UAAWebsite', host="mongodb+srv://avbigbuddy:nZ4ATPTwJjzYnm20@cluster0.wplpkxz.mongodb.net/UAAWebsite")
 app = FastAPI()
 
@@ -13,3 +14,4 @@ app.include_router(currencyroutes.router, tags=["Currency"])
 app.include_router(roloes.router, tags=["roles"])
 app.include_router(serviceroutes.router, tags=["service"])
 app.include_router(userroutes.router, tags=["user"])
+app.include_router(login.router, tags=["admin router"])
