@@ -1,98 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Add Service</title>
-  </head>
-  <body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
-      <h2 class="text-2xl font-bold mb-4 text-gray-800">Add Service</h2>
-      <form id="addServiceForm">
-        <!-- Title -->
-        <div class="mb-6">
-          <label for="title" class="block text-sm font-medium text-gray-700"
-            >Service Title</label
-          >
-          <input
-            type="text"
-            id="title"
-            name="title"
-            required
-            class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter service title"
-          />
-        </div>
-
-        <!-- Submit Button -->
-        <div>
-          <button
-            type="submit"
-            class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-          >
-            Add Service
-          </button>
-        </div>
-      </form>
-
-      <!-- Service List Table -->
-      <div class="mt-8">
-        <h3 class="text-xl font-semibold mb-4">Service List</h3>
-        <table class="min-w-full table-auto">
-          <thead>
-            <tr class="bg-gray-200">
-              <th class="px-4 py-2 text-left">S.No</th>
-              <th class="px-4 py-2 text-left">Service Title</th>
-            </tr>
-          </thead>
-          <tbody id="serviceList">
-            <!-- Dynamic rows will be added here -->
-            {% for service in serviceList %}
-            <tr class="bg-gray-050">
-              <td class="px-4 py-2 text-left">{{loop.index}}</td>
-              <td class="px-4 py-2 text-left">{{service.title}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+{% extends "base.html" %} {% block title %}Add Service{% endblock %} {% block
+content %}
+<div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
+  <h2 class="text-2xl font-bold mb-4 text-gray-800">Add Service</h2>
+  <form id="addServiceForm">
+    <!-- Title -->
+    <div class="mb-6">
+      <label for="title" class="block text-sm font-medium text-gray-700"
+        >Service Title</label
+      >
+      <input
+        type="text"
+        id="title"
+        name="title"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter service title"
+      />
     </div>
 
-    <script>
-      // Handle form submission
-      document
-        .getElementById("addServiceForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
+    <!-- Submit Button -->
+    <div>
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      >
+        Add Service
+      </button>
+    </div>
+  </form>
 
-          const title = document.getElementById("title").value;
+  <!-- Service List Table -->
+  <div class="mt-8">
+    <h3 class="text-xl font-semibold mb-4">Service List</h3>
+    <table class="min-w-full table-auto">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="px-4 py-2 text-left">S.No</th>
+          <th class="px-4 py-2 text-left">Service Title</th>
+        </tr>
+      </thead>
+      <tbody id="serviceList">
+        <!-- Dynamic rows will be added here -->
+        {% for service in serviceList %}
+        <tr class="bg-gray-050">
+          <td class="px-4 py-2 text-left">{{loop.index}}</td>
+          <td class="px-4 py-2 text-left">{{service.title}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 
-          // Prepare the data to send
-          const data = { title: title };
+<script>
+  // Handle form submission
+  document
+    .getElementById("addServiceForm")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-          // Send POST request to FastAPI backend
-          const response = await fetch("/api/v1/add-service", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          });
+      const title = document.getElementById("title").value;
 
-          const result = await response.json();
+      // Prepare the data to send
+      const data = { title: title };
 
-          if (result.status) {
-            // Success, reload the page
-            location.reload();
-          } else {
-            alert("Failed to add service");
-          }
-        });
+      // Send POST request to FastAPI backend
+      const response = await fetch("/api/v1/add-service", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-      // Function to fetch the service list from the backend
+      const result = await response.json();
 
-      // Load services when the page loads
-    </script>
-  </body>
-</html>
+      if (result.status) {
+        // Success, reload the page
+        location.reload();
+      } else {
+        alert("Failed to add service");
+      }
+    });
+
+  // Function to fetch the service list from the backend
+
+  // Load services when the page loads
+</script>
+{% endblock %}

@@ -1,6 +1,7 @@
 import json
 from bson import ObjectId
 from fastapi import FastAPI, APIRouter, Request
+from fastapi.responses import RedirectResponse
 
 from user.models.usermodel import UserLoginModel, UserModel, UserTable
 from roles.models.rolesmodel import RolesModel, RolesTable
@@ -65,7 +66,5 @@ async def userList():
 @router.get("/api/user/logout")
 async def userList(requests: Request):
      requests.session.clear()
-     return {
-         "messsdaax"
-     }
+     return RedirectResponse(url="/admin/login")
     

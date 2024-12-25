@@ -14,3 +14,11 @@ async def read_index(request: Request):
         return templates.TemplateResponse("dashboard.html", {"request": request,})
     else: 
         return templates.TemplateResponse("login.html", {"request": request,})
+    
+@router.post("/admin/login", response_class=HTMLResponse)
+async def read_index(request: Request):
+    user = request.session.get('userdata')
+    if (user):
+        return templates.TemplateResponse("dashboard.html", {"request": request,})
+    else: 
+        return templates.TemplateResponse("login.html", {"request": request,})

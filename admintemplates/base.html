@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}Dynamic Header and Footer{% endblock %}</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-800 text-white min-h-screen flex flex-col">
+      <div class="p-4 text-center font-bold text-lg bg-gray-900">
+        Admin Dashboard
+      </div>
+      <nav class="flex-grow">
+        <ul class="mt-4">
+          <li>
+            <a
+              href="/admin/dashboard"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/admin/adduser"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Add User</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/admin/addclient"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Add Client</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/admin/addrole"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Add Role </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/admin/addservice"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Add Service </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/admin/addcurrency"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Add Currency </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Client List </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Order List </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/api/user/logout"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Log Out </span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <footer class="p-4 text-center text-sm bg-gray-900">
+        © 2024 Your Company
+      </footer>
+    </aside>
+
+    <main class="flex-grow p-6">{% block content %} {% endblock %}</main>
+  </body>
+</html>

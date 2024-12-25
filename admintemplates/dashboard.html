@@ -1,122 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Admin Dashboard</title>
-  </head>
-  <body class="bg-gray-100 min-h-screen flex">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 text-white min-h-screen flex flex-col">
-      <div class="p-4 text-center font-bold text-lg bg-gray-900">
-        Admin Dashboard
-      </div>
-      <nav class="flex-grow">
-        <ul class="mt-4">
-          <li>
-            <a
-              href="/admin/adduser"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Add User</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Add Client</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Add Role </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Add Service </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Add Currency </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Client List </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Order List </span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Log Out </span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <footer class="p-4 text-center text-sm bg-gray-900">
-        © 2024 Your Company
-      </footer>
-    </aside>
+{% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
+content %}
+<header class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Dashboard</h1>
+</header>
 
-    <!-- Main Content -->
-    <main class="flex-grow p-6">
-      <!-- Header -->
-      <header class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Dashboard</h1>
-        <button
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
-        >
-          Add New
-        </button>
-      </header>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- Card 1 -->
+  {% if userdata.role.name == "Admin"%}
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-4">Total Users</h2>
+    <p class="text-4xl font-bold text-gray-800">{{usercount}}</p>
+  </div>
+  {% endif %}
 
-      <!-- Dashboard Content -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card 1 -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-lg font-bold mb-4">Total Users</h2>
-          <p class="text-4xl font-bold text-gray-800">1,234</p>
-        </div>
+  <!-- Card 2 -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-4">Total Booked INR</h2>
+    <p class="text-4xl font-bold text-green-500">$12,345</p>
+  </div>
 
-        <!-- Card 2 -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-lg font-bold mb-4">Revenue</h2>
-          <p class="text-4xl font-bold text-green-500">$12,345</p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-          <h2 class="text-lg font-bold mb-4">New Signups</h2>
-          <p class="text-4xl font-bold text-blue-500">456</p>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+  <!-- Card 3 -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-4">Total Clients</h2>
+    <p class="text-4xl font-bold text-blue-500">{{clientcount}}</p>
+  </div>
+</div>
+{% endblock %}
