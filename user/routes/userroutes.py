@@ -1,6 +1,6 @@
 import json
 from bson import ObjectId
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 
 from user.models.usermodel import UserLoginModel, UserModel, UserTable
 from roles.models.rolesmodel import RolesModel, RolesTable
@@ -17,7 +17,7 @@ async def addClient(body: UserModel):
     }
 
 @router.post("/api/v1/login-user")
-async def loginUser(body:UserLoginModel):
+async def loginUser(request: Request, body:UserLoginModel):
     finduser = UserTable.objects(email=body.email).first()
     if finduser :
         if (finduser.password == body.password):
@@ -26,6 +26,12 @@ async def loginUser(body:UserLoginModel):
             role = RolesTable.objects.get(id=ObjectId(str(finduser.role_id)))
             roletojson = role.to_json()
             rolefromjson = json.loads(roletojson)
+            request.session["userdata"] = {
+                "message": "Login succes",
+                "status": 200,
+                "data": fromjson,
+                "role": rolefromjson
+            }
             return {
                 "message": "Login succes",
                 "status": 200,
@@ -46,3 +52,20 @@ async def loginUser(body:UserLoginModel):
                 "data": None,
                 "role": None
             }
+        
+@router.get("/api/user/list")
+async def userList():
+    userlist = UserTable.objects.all()
+    tojson = userlist.to_json()
+    fromjson = json.loads(tojson)
+    return {
+        "data": fromjson
+    }
+    
+@router.get("/api/user/logout")
+async def userList(requests: Request):
+     requests.session.clear()
+     return {
+         "messsdaax"
+     }
+    

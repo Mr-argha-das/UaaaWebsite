@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Add Currency</title>
+  </head>
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Add Currency</h2>
+      <form id="addCurrencyForm">
+        <!-- Currency Name -->
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700"
+            >Currency Name</label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter currency name"
+          />
+        </div>
+
+        <!-- Currency Symbol -->
+        <div class="mb-4">
+          <label for="symbol" class="block text-sm font-medium text-gray-700"
+            >Currency Symbol</label
+          >
+          <input
+            type="text"
+            id="symbol"
+            name="symbol"
+            required
+            class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter currency symbol"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+          >
+            Add Currency
+          </button>
+        </div>
+      </form>
+
+      <!-- Currency List Table -->
+      <div class="mt-8">
+        <h3 class="text-xl font-semibold mb-4">Currency List</h3>
+        <table class="min-w-full table-auto">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="px-4 py-2 text-left">S.No</th>
+              <th class="px-4 py-2 text-left">Currency Name</th>
+              <th class="px-4 py-2 text-left">Currency Symbol</th>
+            </tr>
+          </thead>
+          <tbody id="currencyList">
+            {% for currency in currencyList %}
+            <tr class="bg-gray-050">
+              <td class="px-4 py-2 text-left">{{loop.index}}</td>
+              <td class="px-4 py-2 text-left">{{currency.name}}</td>
+              <td class="px-4 py-2 text-left">{{currency.symbol}}</td>
+            </tr>
+            {% endfor %}
+            <!-- Dynamic rows will be added here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      // Handle form submission
+      document
+        .getElementById("addCurrencyForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const symbol = document.getElementById("symbol").value;
+
+          // Prepare the data to send
+          const data = { name: name, symbol: symbol };
+
+          // Send POST request to FastAPI backend
+          const response = await fetch("/api/v1/add-currency", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (result.status) {
+            // Success, reload the page
+            location.reload(); // Load the updated currency list
+          } else {
+            alert("Failed to add currency");
+          }
+        });
+
+      // Function to load the currency list from the backend
+    </script>
+  </body>
+</html>

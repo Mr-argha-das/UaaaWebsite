@@ -7,9 +7,10 @@
     <title>Login</title>
   </head>
   <body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <!-- Login Form -->
     <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
       <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Login</h2>
-      <form action="#" method="POST">
+      <form id="loginForm">
         <!-- Email -->
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700"
@@ -50,13 +51,65 @@
           </button>
         </div>
       </form>
-      <!-- Optional Links -->
-      <!-- <p class="mt-4 text-center text-sm text-gray-600">
-        Don't have an account?
-        <a href="/register" class="text-blue-500 hover:underline"
-          >Register here</a
-        >
-      </p> -->
+      <div
+        id="responseMessage"
+        class="mt-4 text-center text-sm text-gray-600"
+      ></div>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+
+          const responseMessage = document.getElementById("responseMessage");
+          responseMessage.textContent = "Processing...";
+
+          try {
+            const response = await fetch("/api/v1/login-user", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (data.status === 200) {
+              // Store response in local storage
+              console.log(data);
+              localStorage.setItem("userData", JSON.stringify(data.data));
+              localStorage.setItem("userRole", JSON.stringify(data.role));
+
+              responseMessage.textContent = `Login successful. Welcome, ${
+                data.data.name || "User"
+              }!`;
+              responseMessage.classList.add("text-green-500");
+              responseMessage.classList.remove("text-red-500");
+
+              // Redirect or handle success
+              setTimeout(() => {
+                window.location.href = "/admin/dashboard"; // Replace with the desired redirection
+              }, 1500);
+            } else {
+              responseMessage.textContent = data.message;
+              responseMessage.classList.add("text-red-500");
+              responseMessage.classList.remove("text-green-500");
+            }
+          } catch (error) {
+            responseMessage.textContent =
+              "An error occurred while processing your request.";
+            responseMessage.classList.add("text-red-500");
+            responseMessage.classList.remove("text-green-500");
+            console.error(error);
+          }
+        });
+    </script>
   </body>
 </html>
