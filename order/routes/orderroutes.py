@@ -21,22 +21,28 @@ async def add_order(
     message: str = Form(...),
     filepath: str = Form(...)
 ):
-    # Add to the database
-    savedata = OrderTable(
-        clintId=client,
-        serviceId=service,
-        deadline=deadline,
-        module_name=module_name,
-        module_code=module_code,
-        wordcount=wordcount,
-        totalorderamount=totalorderamount,
-        clientpaidAmount=clientpaidAmount,
-        currency_type=currency_type,
-        message=message,
-        filepath=filepath
-    )
-    savedata.save()
-    return {"message": "Order added successfully", "status": True}
+    try:
+        # Save to the database
+        savedata = OrderTable(
+            clintId=client,
+            serviceId=service,
+            deadline=deadline,
+            module_name=module_name,
+            module_code=module_code,
+            wordcount=wordcount,
+            totalorderamount=totalorderamount,
+            clientpaidAmount=clientpaidAmount,
+            currency_type=currency_type,
+            message=message,
+            filepath=filepath
+        )
+        # Commit to the database
+        session.add(savedata)
+        session.commit()
+        return {"message": "Order added successfully"}
+    except Exception as e:
+        return {"message": str(e)}, 400
+
 
 
 
