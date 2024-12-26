@@ -1,0 +1,175 @@
+{% extends "base.html" %} {% block title %}Add Order{% endblock %} {% block
+content %}
+
+<div class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-6">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">Place Order</h2>
+  <form action="#" method="POST" enctype="multipart/form-data">
+    <!-- Search Client -->
+    <div class="mb-4">
+      <label for="client" class="block text-sm font-medium text-gray-700"
+        >Search Client</label
+      >
+      <select
+        id="client"
+        name="client"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="" disabled selected>Search or select a client</option>
+        {% for client in clientsList %}
+        <option value="{{client['_id']['\u0024oid']}}">{{client.name}} ({{client.email}})</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Service Name -->
+    <div class="mb-4">
+      <label for="service" class="block text-sm font-medium text-gray-700"
+        >Service Name</label
+      >
+      <select
+        id="service"
+        name="service"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="" disabled selected>Search or select a service</option>
+        {% for service in serviceList %}
+        <option value="{{service['_id']['\u0024oid']}}">{{service.title}}</option>
+        {% endfor %}
+
+      </select>
+    </div>
+
+    <!-- Deadline -->
+    <div class="mb-4">
+      <label for="deadline" class="block text-sm font-medium text-gray-700"
+        >Deadline</label
+      >
+      <input
+        type="date"
+        id="deadline"
+        name="deadline"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <!-- Module Name -->
+    <div class="mb-4">
+      <label for="module-name" class="block text-sm font-medium text-gray-700"
+        >Module Name</label
+      >
+      <input
+        type="text"
+        id="module-name"
+        name="moduleName"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter module name"
+      />
+    </div>
+
+    <!-- Module Code -->
+    <div class="mb-4">
+      <label for="module-code" class="block text-sm font-medium text-gray-700"
+        >Module Code</label
+      >
+      <input
+        type="text"
+        id="module-code"
+        name="moduleCode"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter module code"
+      />
+    </div>
+
+    <!-- Word Count -->
+    <div class="mb-4">
+      <label for="word-count" class="block text-sm font-medium text-gray-700"
+        >Word Count</label
+      >
+      <input
+        type="number"
+        id="word-count"
+        name="wordCount"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter word count"
+      />
+    </div>
+
+    <!-- Message -->
+    <div class="mb-4">
+      <label for="message" class="block text-sm font-medium text-gray-700"
+        >Message</label
+      >
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Enter your message here"
+      ></textarea>
+    </div>
+
+    <!-- Payment Type -->
+    <div class="mb-4">
+      <label for="payment-type" class="block text-sm font-medium text-gray-700"
+        >Payment Type</label
+      >
+      <select
+        id="payment-type"
+        name="paymentType"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="" disabled selected>Select payment type</option>
+        <option value="credit">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="bank">Bank Transfer</option>
+      </select>
+    </div>
+    <!-- Currency Select -->
+    <div class="mb-4">
+      <label for="currency" class="block text-sm font-medium text-gray-700"
+        >Select Currency</label
+      >
+      <select
+        id="currency"
+        name="currency"
+        required
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option value="" disabled selected>Select a currency</option>
+        {% for curency in currency %}
+        <option value="{{curency['_id']['\u0024oid']}}">({{curency.symbol}} ) {{curency.name}}</option>
+        {% endfor %}
+    </div>
+
+    <!-- Upload File -->
+    <div class="mb-6">
+      <label for="file" class="block text-sm font-medium text-gray-700"
+        >Upload File</label
+      >
+      <input
+        type="file"
+        id="file"
+        name="file"
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <div>
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      >
+        Place Order
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
