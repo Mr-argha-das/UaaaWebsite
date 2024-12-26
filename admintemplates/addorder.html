@@ -279,8 +279,8 @@ content %}
           message: message,
           payment_type: payentType,
           currency_type: curency,
-          totalorderamount: total_order_amount,
-          clientpaidAmount: client_paid_amount,
+          totalorderamount: parseInt(total_order_amount),
+          clientpaidAmount: parseInt(client_paid_amount),
           filepath: filepath,
         }),
       });
