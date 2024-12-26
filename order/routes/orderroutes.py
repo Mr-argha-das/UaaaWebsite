@@ -1,5 +1,5 @@
 import shutil
-from fastapi import FastAPI, APIRouter, File, Form, UploadFile
+from fastapi import FastAPI, APIRouter, File, Form, Request, UploadFile
 from pathlib import Path  # Explicit import from pathlib
 from order.models.ordermodel import OrderIdTable, OrderModel, OrderTable
 
@@ -9,15 +9,16 @@ UPLOAD_DIRECTORY = "uploads/"
 Path(UPLOAD_DIRECTORY).mkdir(parents=True, exist_ok=True)
 
 @router.post("/api/v1/add-order")
-async def add_order(body: OrderModel):
+async def add_order(request: Request, body: OrderModel):
     try:
         # Save to the database
+        userData = request.session.get('userdata')
         orderIdData = len(OrderTable.objects.all())
         count = 000000 + orderIdData
         savedata = OrderTable(
             orderNoID=f'order-{count+1}',
             clintId=body.clintId,
-            userId=body.userId,
+            userId=str(userData['data']['_id']['\u0024oid']),
             serviceId=body.serviceId,
             deadline=body.deadline,
             module_name=body.module_name,
