@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class OrderTable(Document):
+    orderNoID = StringField(required=True)
     userId = StringField(required=True)
     clintId = StringField(required=True)
     serviceId = StringField(required=True)
@@ -31,3 +32,10 @@ class OrderModel(BaseModel):
     totalorderamount : int
     clientpaidAmount : int
     filepath : str
+    
+    
+class OrderIdTable(Document):
+
+    orderNo = StringField(required=True)
+    
+    

@@ -1,7 +1,7 @@
 import shutil
 from fastapi import FastAPI, APIRouter, File, Form, UploadFile
 from pathlib import Path  # Explicit import from pathlib
-from order.models.ordermodel import OrderTable
+from order.models.ordermodel import OrderIdTable, OrderTable
 
 
 router = APIRouter()
@@ -9,21 +9,24 @@ UPLOAD_DIRECTORY = "uploads/"
 Path(UPLOAD_DIRECTORY).mkdir(parents=True, exist_ok=False)
 @router.post("/api/v1/add-order")
 async def add_order(
-    client: str = Form(...),
-    service: str = Form(...),
-    deadline: str = Form(...),
-    module_name: str = Form(...),
-    module_code: str = Form(...),
-    wordcount: str = Form(...),
-    totalorderamount: int = Form(...),
-    clientpaidAmount: int = Form(...),
-    currency_type: str = Form(...),
-    message: str = Form(...),
-    filepath: str = Form(...)
+    client: str,
+    service: str,
+    deadline: str,
+    module_name: str,
+    module_code: str,
+    wordcount: str,
+    totalorderamount: int,
+    clientpaidAmount: int,
+    currency_type: str,
+    message: str,
+    filepath: str
 ):
     try:
         # Save to the database
+        orderIdData = len(OrderTable.objects.all())
+        count = 000000 + orderIdData
         savedata = OrderTable(
+            orderNoID=f'order-{count+1}',
             clintId=client,
             serviceId=service,
             deadline=deadline,
@@ -37,8 +40,7 @@ async def add_order(
             filepath=filepath
         )
         # Commit to the database
-        session.add(savedata)
-        session.commit()
+        savedata.save()
         return {"message": "Order added successfully"}
     except Exception as e:
         return {"message": str(e)}, 400

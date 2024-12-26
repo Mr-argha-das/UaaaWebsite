@@ -252,6 +252,18 @@ content %}
 <script>
   const uploadForm = document.getElementById("uploadForm");
   const responseMessage = document.getElementById("responseMessage");
+  /// fields
+  const clientId = document.getElementById("client");
+  const service = document.getElementById("service");
+  const curency = document.getElementById("currency-type");
+  const deadline = document.getElementById("deadline");
+  const modulecode = document.getElementById("module-code");
+  const modulename = document.getElementById("module-name");
+  const wordcount = document.getElementById("word-count");
+  const payentType = document.getElementById("payment-type");
+  const total_order_amount = document.getElementById("total-order-amount");
+  const client_paid_amount = document.getElementById("client-paid-amount");
+  const message = document.getElementById("message");
 
   uploadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
