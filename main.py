@@ -4,6 +4,7 @@ from fastapi import APIRouter, FastAPI
 from mongoengine import connect
 from client.routes import clientroutes
 from currency.routes import currencyroutes
+from order.routes import orderroutes
 from roles.routes import roloes
 from services.routes import serviceroutes
 from user.routes import userroutes
@@ -49,3 +50,4 @@ app.include_router(addcurrency.router, tags=["admin router"])
 app.include_router(clientList.router, tags=["admin router"])
 app.include_router(userlist.router, tags=["admin router"])
 app.include_router(addorder.router, tags=["admin router"])
+app.include_router(orderroutes.router, tags=['order route'])
