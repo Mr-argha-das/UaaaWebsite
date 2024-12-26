@@ -1,43 +1,33 @@
 import shutil
 from fastapi import FastAPI, APIRouter, File, Form, UploadFile
 from pathlib import Path  # Explicit import from pathlib
-from order.models.ordermodel import OrderIdTable, OrderTable
+from order.models.ordermodel import OrderIdTable, OrderModel, OrderTable
 
 
 router = APIRouter()
 UPLOAD_DIRECTORY = "uploads/"
-Path(UPLOAD_DIRECTORY).mkdir(parents=True, exist_ok=False)
+Path(UPLOAD_DIRECTORY).mkdir(parents=True, exist_ok=True)
+
 @router.post("/api/v1/add-order")
-async def add_order(
-    client: str,
-    service: str,
-    deadline: str,
-    module_name: str,
-    module_code: str,
-    wordcount: str,
-    totalorderamount: int,
-    clientpaidAmount: int,
-    currency_type: str,
-    message: str,
-    filepath: str
-):
+async def add_order(body: OrderModel):
     try:
         # Save to the database
         orderIdData = len(OrderTable.objects.all())
         count = 000000 + orderIdData
         savedata = OrderTable(
             orderNoID=f'order-{count+1}',
-            clintId=client,
-            serviceId=service,
-            deadline=deadline,
-            module_name=module_name,
-            module_code=module_code,
-            wordcount=wordcount,
-            totalorderamount=totalorderamount,
-            clientpaidAmount=clientpaidAmount,
-            currency_type=currency_type,
-            message=message,
-            filepath=filepath
+            clintId=body.clintId,
+            userId=body.userId,
+            serviceId=body.serviceId,
+            deadline=body.deadline,
+            module_name=body.module_name,
+            module_code=body.module_code,
+            wordcount=body.wordcount,
+            totalorderamount=body.totalorderamount,
+            clientpaidAmount=body.clientpaidAmount,
+            currency_type=body.currency_type,
+            message=body.message,
+            filepath=body.filepath
         )
         # Commit to the database
         savedata.save()

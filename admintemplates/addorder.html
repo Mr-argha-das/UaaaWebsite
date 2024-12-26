@@ -3,215 +3,213 @@ content %}
 
 <div class="w-full max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 mt-6">
   <h2 class="text-2xl font-bold mb-6 text-gray-800">Place Order</h2>
-  <form>
-    <!-- Search Client -->
-    <div class="mb-4">
-      <label for="client" class="block text-sm font-medium text-gray-700"
-        >Search Client</label
-      >
-      <select
-        id="client"
-        name="clintId"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      >
-        <option value="" disabled selected>Select a client</option>
-        {% for client in clientsList %}
-        <option value="{{client['_id']['\u0024oid']}}">
-          {{client.name}} ({{client.email}})
-        </option>
-        {% endfor %}
-      </select>
-    </div>
 
-    <!-- Service Name -->
-    <div class="mb-4">
-      <label for="service" class="block text-sm font-medium text-gray-700"
-        >Service Name</label
-      >
-      <select
-        id="service"
-        name="serviceId"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      >
-        <option value="" disabled selected>Select a service</option>
-        {% for service in serviceList %}
-        <option value="{{service['_id']['\u0024oid']}}">
-          {{service.title}}
-        </option>
-        {% endfor %}
-      </select>
-    </div>
+  <!-- Search Client -->
+  <div class="mb-4">
+    <label for="client" class="block text-sm font-medium text-gray-700"
+      >Search Client</label
+    >
+    <select
+      id="client"
+      name="clintId"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option value="" disabled selected>Select a client</option>
+      {% for client in clientsList %}
+      <option value="{{client['_id']['\u0024oid']}}">
+        {{client.name}} ({{client.email}})
+      </option>
+      {% endfor %}
+    </select>
+  </div>
 
-    <!-- Deadline -->
-    <div class="mb-4">
-      <label for="deadline" class="block text-sm font-medium text-gray-700"
-        >Deadline</label
-      >
-      <input
-        type="date"
-        id="deadline"
-        name="deadline"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      />
-    </div>
+  <!-- Service Name -->
+  <div class="mb-4">
+    <label for="service" class="block text-sm font-medium text-gray-700"
+      >Service Name</label
+    >
+    <select
+      id="service"
+      name="serviceId"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option value="" disabled selected>Select a service</option>
+      {% for service in serviceList %}
+      <option value="{{service['_id']['\u0024oid']}}">{{service.title}}</option>
+      {% endfor %}
+    </select>
+  </div>
 
-    <!-- Module Code -->
-    <div class="mb-4">
-      <label for="module-code" class="block text-sm font-medium text-gray-700"
-        >Module Code</label
-      >
-      <input
-        type="text"
-        id="module-code"
-        name="module_code"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter module code"
-      />
-    </div>
+  <!-- Deadline -->
+  <div class="mb-4">
+    <label for="deadline" class="block text-sm font-medium text-gray-700"
+      >Deadline</label
+    >
+    <input
+      type="date"
+      id="deadline"
+      name="deadline"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    />
+  </div>
 
-    <!-- Module Name -->
-    <div class="mb-4">
-      <label for="module-name" class="block text-sm font-medium text-gray-700"
-        >Module Name</label
-      >
-      <input
-        type="text"
-        id="module-name"
-        name="module_name"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter module name"
-      />
-    </div>
+  <!-- Module Code -->
+  <div class="mb-4">
+    <label for="module-code" class="block text-sm font-medium text-gray-700"
+      >Module Code</label
+    >
+    <input
+      type="text"
+      id="module-code"
+      name="module_code"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter module code"
+    />
+  </div>
 
-    <!-- Word Count -->
-    <div class="mb-4">
-      <label for="word-count" class="block text-sm font-medium text-gray-700"
-        >Word Count</label
-      >
-      <input
-        type="number"
-        id="word-count"
-        name="wordcount"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter word count"
-      />
-    </div>
+  <!-- Module Name -->
+  <div class="mb-4">
+    <label for="module-name" class="block text-sm font-medium text-gray-700"
+      >Module Name</label
+    >
+    <input
+      type="text"
+      id="module-name"
+      name="module_name"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter module name"
+    />
+  </div>
 
-    <!-- Payment Type -->
-    <div class="mb-4">
-      <label for="payment-type" class="block text-sm font-medium text-gray-700"
-        >Payment Type</label
-      >
-      <input
-        type="text"
-        id="payment-type"
-        name="payment_type"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter payment type"
-      />
-    </div>
+  <!-- Word Count -->
+  <div class="mb-4">
+    <label for="word-count" class="block text-sm font-medium text-gray-700"
+      >Word Count</label
+    >
+    <input
+      type="number"
+      id="word-count"
+      name="wordcount"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter word count"
+    />
+  </div>
 
-    <!-- Currency Type -->
+  <!-- Payment Type -->
+  <div class="mb-4">
+    <label for="payment-type" class="block text-sm font-medium text-gray-700"
+      >Payment Type</label
+    >
+    <input
+      type="text"
+      id="payment-type"
+      name="payment_type"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter payment type"
+    />
+  </div>
 
-    <div class="mb-4">
-      <label for="client" class="block text-sm font-medium text-gray-700"
-        >Search currency</label
-      >
-      <select
-        id="currency-type"
-        name="currency_type"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      >
-        <option value="" disabled selected>Select a currency</option>
-        {% for currency in currency %}
-        <option value="{{currency['_id']['\u0024oid']}}">
-          {{currency.name}} ({{currency.symbol}})
-        </option>
-        {% endfor %}
-      </select>
-    </div>
+  <!-- Currency Type -->
 
-    <!-- Total Order Amount -->
-    <div class="mb-4">
-      <label
-        for="total-order-amount"
-        class="block text-sm font-medium text-gray-700"
-        >Total Order Amount</label
-      >
-      <input
-        type="number"
-        id="total-order-amount"
-        name="totalorderamount"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter total order amount"
-      />
-    </div>
+  <div class="mb-4">
+    <label for="client" class="block text-sm font-medium text-gray-700"
+      >Search currency</label
+    >
+    <select
+      id="currency-type"
+      name="currency_type"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option value="" disabled selected>Select a currency</option>
+      {% for currency in currency %}
+      <option value="{{currency['_id']['\u0024oid']}}">
+        {{currency.name}} ({{currency.symbol}})
+      </option>
+      {% endfor %}
+    </select>
+  </div>
 
-    <!-- Client Paid Amount -->
-    <div class="mb-4">
-      <label
-        for="client-paid-amount"
-        class="block text-sm font-medium text-gray-700"
-        >Client Paid Amount</label
-      >
-      <input
-        type="number"
-        id="client-paid-amount"
-        name="clientpaidAmount"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter client paid amount"
-      />
-    </div>
+  <!-- Total Order Amount -->
+  <div class="mb-4">
+    <label
+      for="total-order-amount"
+      class="block text-sm font-medium text-gray-700"
+      >Total Order Amount</label
+    >
+    <input
+      type="number"
+      id="total-order-amount"
+      name="totalorderamount"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter total order amount"
+    />
+  </div>
 
-    <!-- Upload File -->
-    <div class="mb-4">
-      <label for="file" class="block text-sm font-medium text-gray-700">
-        Upload File
-      </label>
-      <input
-        type="file"
-        id="file"
-        name="filepath"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-      />
-    </div>
-    <div id="responseMessage" class="text-sm mt-2"></div>
-    <!-- Message -->
-    <div class="mb-4">
-      <label for="message" class="block text-sm font-medium text-gray-700"
-        >Message</label
-      >
-      <textarea
-        id="message"
-        name="message"
-        rows="4"
-        required
-        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-        placeholder="Enter additional details"
-      ></textarea>
-    </div>
+  <!-- Client Paid Amount -->
+  <div class="mb-4">
+    <label
+      for="client-paid-amount"
+      class="block text-sm font-medium text-gray-700"
+      >Client Paid Amount</label
+    >
+    <input
+      type="number"
+      id="client-paid-amount"
+      name="clientpaidAmount"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter client paid amount"
+    />
+  </div>
 
-    <!-- Submit Button -->
-    <div>
-      <button
-        type="submit"
-        class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-      >
-        Place Order
-      </button>
-    </div>
-  </form>
+  <!-- Upload File -->
+  <div class="mb-4">
+    <label for="file" class="block text-sm font-medium text-gray-700">
+      Upload File
+    </label>
+    <input
+      type="file"
+      id="file"
+      name="filepath"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    />
+  </div>
+  <div id="responseMessage" class="text-sm mt-2"></div>
+  <!-- Message -->
+  <div class="mb-4">
+    <label for="message" class="block text-sm font-medium text-gray-700"
+      >Message</label
+    >
+    <textarea
+      id="message"
+      name="message"
+      rows="4"
+      required
+      class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      placeholder="Enter additional details"
+    ></textarea>
+  </div>
+
+  <!-- Submit Button -->
+  <div>
+    <button
+      id="submit"
+      type="submit"
+      onclick="postData()"
+      class="w-full bg-blue-500 text-white py-3 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+      Place Order
+    </button>
+  </div>
 </div>
 
 <script>
@@ -250,9 +248,8 @@ content %}
 </script>
 
 <script>
-  const uploadForm = document.getElementById("uploadForm");
-  const responseMessage = document.getElementById("responseMessage");
   /// fields
+  const filepath = document.getElementById("filePath");
   const clientId = document.getElementById("client");
   const service = document.getElementById("service");
   const curency = document.getElementById("currency-type");
@@ -265,15 +262,27 @@ content %}
   const client_paid_amount = document.getElementById("client-paid-amount");
   const message = document.getElementById("message");
 
-  uploadForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(uploadForm);
-
+  async function postData() {
     try {
+      const userDataString = localStorage.getItem("userData");
+      console.log(userDataString);
       const response = await fetch("/api/v1/add-order", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify({
+          userId: userDataString["_id"]["\u0024oid"],
+          clintId: clientId,
+          serviceId: service,
+          deadline: deadline,
+          module_code: modulecode,
+          module_name: modulename,
+          wordcount: wordcount,
+          message: message,
+          payment_type: payentType,
+          currency_type: curency,
+          totalorderamount: total_order_amount,
+          clientpaidAmount: client_paid_amount,
+          filepath: filepath,
+        }),
       });
 
       const result = await response.json();
@@ -289,9 +298,10 @@ content %}
         responseMessage.className = "text-red-500";
       }
     } catch (error) {
+      console.log(error);
       responseMessage.textContent = "An unexpected error occurred.";
       responseMessage.className = "text-red-500";
     }
-  });
+  }
 </script>
 {% endblock %}
