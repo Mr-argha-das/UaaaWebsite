@@ -7,7 +7,7 @@ from currency.routes import currencyroutes
 from roles.routes import roloes
 from services.routes import serviceroutes
 from user.routes import userroutes
-from pages.admin import addcurrency, addrole, login, dashboard, adduser, addclient,addservice
+from pages.admin import addcurrency, addrole, clientList, login, dashboard, adduser, addclient,addservice, userlist
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 load_dotenv()
@@ -46,3 +46,5 @@ app.include_router(addservice.router, tags=["admin router"])
 app.include_router(addclient.router, tags=["admin router"])
 app.include_router(addrole.router, tags=["admin router"])
 app.include_router(addcurrency.router, tags=["admin router"])
+app.include_router(clientList.router, tags=["admin router"])
+app.include_router(userlist.router, tags=["admin router"])
