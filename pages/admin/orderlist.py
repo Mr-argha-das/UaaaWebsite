@@ -1,9 +1,12 @@
 import json
-from fastapi import FastAPI, Request, APIRouter
+from bson import ObjectId
+from fastapi import FastAPI, APIRouter
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-
+from starlette.requests import Request
+from client.models.clientmodel import ClientTable
+from order.models.ordermodel import OrderTable
 from services.models.serviocemodels import ServiceTable
 from user.models.usermodel import UserTable
 
@@ -13,4 +16,45 @@ templates = Jinja2Templates(directory="admintemplates")
 
 @router.get("/admin/orderlist", response_class=HTMLResponse)
 async def read_index(request: Request):
-    return templates.TemplateResponse("orderslist.html", {"request": request,})
+    data = []
+    user = request.session.get('userdata')
+    if(user['role']['v'] == 4 or user['role']['v'] == 3):
+
+        allorder = OrderTable.objects.all()
+        for order in allorder:
+            finduser = UserTable.objects.get(id=ObjectId(str(order.userId)))
+            touser = finduser.to_json()
+            fromuserjson = json.loads(touser)
+            pendingamount = order.totalorderamount - order.clientpaidAmount
+            ordertojson = order.to_json()
+            orderfromjson = json.loads(ordertojson)
+            clintdata = ClientTable.objects.get(id=ObjectId(str(order.clintId)))
+            servicedata = ServiceTable.objects.get(id=ObjectId(str(order.serviceId)))
+            data.append({
+                'user': fromuserjson,
+                'pendingamount': pendingamount,
+                'order': orderfromjson,
+                'clientName': clintdata.name,
+                'service': servicedata.title
+            })
+    else:
+        allorder = OrderTable.objects(userId=str(['data']['_id']['\u0024oid'])).all()
+        for order in allorder:
+            finduser = UserTable.objects.get(id=ObjectId(str(order.userId)))
+            touser = finduser.to_json()
+            fromuserjson = json.loads(touser)
+            pendingamount = order.totalorderamount - order.clientpaidAmount
+            ordertojson = order.to_json()
+            orderfromjson = json.loads(ordertojson)
+            clintdata = ClientTable.objects.get(id=ObjectId(str(order.clintId)))
+            servicedata = ServiceTable.objects.get(id=ObjectId(str(order.serviceId)))
+            data.append({
+                'user': fromuserjson,
+                'pendingamount': pendingamount,
+                'order': orderfromjson,
+                'clientName': clintdata.name,
+                'service': servicedata.title
+            })
+    
+        
+    return templates.TemplateResponse("orderslist.html", {"request": request, "orderes" : data, "userdata": user})

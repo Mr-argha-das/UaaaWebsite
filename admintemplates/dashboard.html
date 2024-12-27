@@ -16,7 +16,7 @@ content %}
   <!-- Card 2 -->
   <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-lg font-bold mb-4">Total Booked INR</h2>
-    <p class="text-4xl font-bold text-green-500">$12,345</p>
+    <p class="text-4xl font-bold text-green-500">₹{{totalbooked}}</p>
   </div>
 
   <!-- Card 3 -->
@@ -24,5 +24,18 @@ content %}
     <h2 class="text-lg font-bold mb-4">Total Clients</h2>
     <p class="text-4xl font-bold text-blue-500">{{clientcount}}</p>
   </div>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-4">Total Pending amount</h2>
+    <p class="text-4xl font-bold text-red-500">₹{{totalpending}}</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-4">Total Orders this month</h2>
+    <p class="text-4xl font-bold text-blue-500">{{ordercount}}</p>
+  </div>
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-4">Total Wordcount this month</h2>
+    <p class="text-4xl font-bold text-blue-500">{{wordcount}}</p>
+  </div>
+  
 </div>
 {% endblock %}
