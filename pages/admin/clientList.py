@@ -18,5 +18,5 @@ async def read_index(request: Request):
         data = ClientTable.objects(userid=str(user['data']['_id']['\u0024oid'])).all()
     tojson = data.to_json()
     fromjson = json.loads(tojson)
-    return templates.TemplateResponse("clientlist.html", {"request": request, "clientList": fromjson})
+    return templates.TemplateResponse("clientlist.html", {"request": request, "context": user, "clientList": fromjson})
     

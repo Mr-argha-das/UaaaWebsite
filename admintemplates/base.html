@@ -22,20 +22,13 @@
               <span class="material-icons mr-3">Dashboard</span>
             </a>
           </li>
+          {% if context.role.v == 4 %}
           <li>
             <a
               href="/admin/adduser"
               class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
             >
               <span class="material-icons mr-3">Add User</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="/admin/addclient"
-              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
-            >
-              <span class="material-icons mr-3">Add Client</span>
             </a>
           </li>
           <li>
@@ -62,7 +55,25 @@
               <span class="material-icons mr-3">Add Currency </span>
             </a>
           </li>
-          <li></li>
+
+          <li>
+            <a
+              href="/admin/userlist"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">User List </span>
+            </a>
+          </li>
+          {% endif %}
+          <li>
+            <a
+              href="/admin/addclient"
+              class="flex items-center px-4 py-2 hover:bg-gray-700 transition"
+            >
+              <span class="material-icons mr-3">Add Client</span>
+            </a>
+          </li>
+
           <li>
             <a
               href="/admin/addorder"
@@ -87,6 +98,7 @@
               <span class="material-icons mr-3">Order List </span>
             </a>
           </li>
+
           <li>
             <a
               href="/api/user/logout"

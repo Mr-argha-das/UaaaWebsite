@@ -27,4 +27,4 @@ async def read_index(request: Request):
     serviceList = ServiceTable.objects.all()
     serviceTojson = serviceList.to_json()
     serviceFromJson = json.loads(serviceTojson)
-    return templates.TemplateResponse("addorder.html", {"request": request, "currency": fromjson, "clientsList": fromClientJson, "serviceList": serviceFromJson})
+    return templates.TemplateResponse("addorder.html", {"request": request, "context":userData, "currency": fromjson, "clientsList": fromClientJson, "serviceList": serviceFromJson})

@@ -13,7 +13,8 @@ templates = Jinja2Templates(directory="admintemplates")
 
 @router.get("/admin/userlist", response_class=HTMLResponse)
 async def read_index(request: Request):
+    userData = request.session.get('userdata')
     services = UserTable.objects.all()
     tojson = services.to_json()
     fromjson = json.loads(tojson)
-    return templates.TemplateResponse("userlist.html", {"request": request, "userlist": fromjson})
+    return templates.TemplateResponse("userlist.html", {"request": request, "userlist": fromjson, "context":userData})

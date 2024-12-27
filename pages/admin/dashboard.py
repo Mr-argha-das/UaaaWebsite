@@ -37,4 +37,4 @@ async def read_index(request: Request):
             pending = order.totalorderamount - order.clientpaidAmount
             totalpenddingamount = totalpenddingamount + pending
             wordcount = wordcount + int(order.wordcount)
-    return templates.TemplateResponse("dashboard.html", {"request": request, "userdata": userData, "usercount": usercount, "clientcount": clientscount, "totalbooked": totalbookedamount, "totalpending": totalpenddingamount, "ordercount": ordercount, "wordcount": wordcount})
+    return templates.TemplateResponse("dashboard.html", {"request": request, "context":userData, "userdata": userData, "usercount": usercount, "clientcount": clientscount, "totalbooked": totalbookedamount, "totalpending": totalpenddingamount, "ordercount": ordercount, "wordcount": wordcount})

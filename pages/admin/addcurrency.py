@@ -12,7 +12,8 @@ templates = Jinja2Templates(directory="admintemplates")
 
 @router.get("/admin/addcurrency", response_class=HTMLResponse)
 async def read_index(request: Request):
+    userData = request.session.get('userdata')
     data = CurrencyTable.objects.all()
     tojson = data.to_json()
     fromjson = json.loads(tojson)
-    return templates.TemplateResponse("addcurrency.html", {"request": request, "currencyList": fromjson})
+    return templates.TemplateResponse("addcurrency.html", {"request": request, "context":userData, "currencyList": fromjson})

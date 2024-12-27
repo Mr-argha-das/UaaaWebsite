@@ -9,4 +9,5 @@ templates = Jinja2Templates(directory="admintemplates")
 
 @router.get("/admin/addclient", response_class=HTMLResponse)
 async def read_index(request: Request):
-    return templates.TemplateResponse("addclient.html", {"request": request,})
+    userData = request.session.get('userdata')
+    return templates.TemplateResponse("addclient.html", {"request": request, "context": userData})

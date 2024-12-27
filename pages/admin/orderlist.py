@@ -57,4 +57,4 @@ async def read_index(request: Request):
             })
     
         
-    return templates.TemplateResponse("orderslist.html", {"request": request, "orderes" : data, "userdata": user})
+    return templates.TemplateResponse("orderslist.html", {"request": request, "context":user, "orderes" : data, "userdata": user})
