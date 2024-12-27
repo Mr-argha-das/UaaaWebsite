@@ -1,0 +1,87 @@
+{% extends "base.html" %} {% block title %}Order List{% endblock %} {% block
+    content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input[type="text"] {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+    <h2>Searchable Table</h2>
+    <input type="text" id="searchInput" placeholder="Search in all columns..." onkeyup="searchTable()">
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>City</th>
+                <th>Profession</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John Doe</td>
+                <td>28</td>
+                <td>New York</td>
+                <td>Engineer</td>
+            </tr>
+            <tr>
+                <td>Jane Smith</td>
+                <td>34</td>
+                <td>Los Angeles</td>
+                <td>Designer</td>
+            </tr>
+            <tr>
+                <td>Michael Johnson</td>
+                <td>45</td>
+                <td>Chicago</td>
+                <td>Manager</td>
+            </tr>
+            <tr>
+                <td>Emily Davis</td>
+                <td>25</td>
+                <td>San Francisco</td>
+                <td>Developer</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function searchTable() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("dataTable");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                let match = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().includes(filter)) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = match ? "" : "none";
+            }
+        }
+    </script>
+    {% endblock %}

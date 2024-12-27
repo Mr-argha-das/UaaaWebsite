@@ -8,7 +8,7 @@ from order.routes import orderroutes
 from roles.routes import roloes
 from services.routes import serviceroutes
 from user.routes import userroutes
-from pages.admin import addcurrency, addorder, addrole, clientList, login, dashboard, adduser, addclient,addservice, userlist
+from pages.admin import addcurrency, addorder, addrole, clientList, login, dashboard, adduser, addclient,addservice, orderlist, userlist
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 load_dotenv()
@@ -51,3 +51,4 @@ app.include_router(clientList.router, tags=["admin router"])
 app.include_router(userlist.router, tags=["admin router"])
 app.include_router(addorder.router, tags=["admin router"])
 app.include_router(orderroutes.router, tags=['order route'])
+app.include_router(orderlist.router, tags=['order route'])
