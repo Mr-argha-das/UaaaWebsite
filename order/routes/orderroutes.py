@@ -48,6 +48,6 @@ async def upload_file(file: UploadFile = File(...)):
         file_location = Path(UPLOAD_DIRECTORY) / file.filename
         with file_location.open("wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        return {"message": f"File '{file.filename}' uploaded successfully!", "path": str(file_location)}
+        return {"message": f"File '{file.filename}' uploaded successfully!", "path": file.filename}
     except Exception as e:
         return {"error": str(e)}

@@ -19,7 +19,6 @@ class OrderTable(Document):
     filepath = StringField(required=True)
 
 class OrderModel(BaseModel):
-    userId : str
     clintId : str
     serviceId : str
     deadline : str

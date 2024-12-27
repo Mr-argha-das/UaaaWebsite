@@ -211,13 +211,14 @@ content %}
       Place Order
     </button>
   </div>
+  <input id="filePath" />
 </div>
 
 <script>
   const fileInput = document.getElementById("file");
   const filePathInput = document.getElementById("filePath"); // Hidden input field
   const responseMessage = document.getElementById("responseMessage");
-
+  
   fileInput.addEventListener("change", async (event) => {
     const file = event.target.files[0];
     if (!file) {
@@ -250,7 +251,7 @@ content %}
 
 <script>
   /// fields
-  const filepath = document.getElementById("filePath");
+ 
   const clientId = document.getElementById("client");
   const service = document.getElementById("service");
   const curency = document.getElementById("currency-type");
@@ -262,26 +263,29 @@ content %}
   const total_order_amount = document.getElementById("total-order-amount");
   const client_paid_amount = document.getElementById("client-paid-amount");
   const message = document.getElementById("message");
-
+  const filePath = document.getElementById("filePath");
   async function postData() {
     try {
       const userDataString = localStorage.getItem("userData");
       console.log(userDataString);
       const response = await fetch("/api/v1/add-order", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          clintId: clientId,
-          serviceId: service,
-          deadline: deadline,
-          module_code: modulecode,
-          module_name: modulename,
-          wordcount: wordcount,
-          message: message,
-          payment_type: payentType,
-          currency_type: curency,
-          totalorderamount: parseInt(total_order_amount),
-          clientpaidAmount: parseInt(client_paid_amount),
-          filepath: filepath,
+          clintId: clientId.value,
+          serviceId: service.value,
+          deadline: deadline.value,
+          module_code: modulecode.value,
+          module_name: modulename.value,
+          wordcount: wordcount.value,
+          message: message.value,
+          payment_type: payentType.value,
+          currency_type: curency.value,
+          totalorderamount: parseInt(total_order_amount.value),
+          clientpaidAmount: parseInt(client_paid_amount.value),
+          filepath: filePath.value
         }),
       });
 
@@ -290,8 +294,9 @@ content %}
       if (response.ok) {
         responseMessage.textContent = "Order placed successfully!";
         responseMessage.className = "text-green-500";
-        uploadForm.reset(); // Clear the form
+
       } else {
+        
         responseMessage.textContent = `Error: ${
           result.message || "Failed to place the order."
         }`;
