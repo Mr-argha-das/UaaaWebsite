@@ -52,3 +52,8 @@ app.include_router(userlist.router, tags=["admin router"])
 app.include_router(addorder.router, tags=["admin router"])
 app.include_router(orderroutes.router, tags=['order route'])
 app.include_router(orderlist.router, tags=['order route'])
+
+import uvicorn
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True)
