@@ -20,10 +20,11 @@ async def read_index(request: Request):
     ordercount = 0
     clientscount = len(ClientTable.objects.all())
     userData = request.session.get('userdata')
-    if userData['role']['v'] != 4 or userData['role']['v'] != 3:
+    if userData['role']['v'] != 4 :
         clientscount = len(ClientTable.objects(userid=str(userData['data']['_id']['\u0024oid'])).all())
         orders = OrderTable.objects(userId = str(userData['data']['_id']['\u0024oid'])).all()
         ordercount = len(orders)
+        print('hey')
         for order in orders:
             totalbookedamount = totalbookedamount + order.totalorderamount
             pending = order.totalorderamount - order.clientpaidAmount

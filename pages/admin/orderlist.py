@@ -18,7 +18,7 @@ templates = Jinja2Templates(directory="admintemplates")
 async def read_index(request: Request):
     data = []
     user = request.session.get('userdata')
-    if(user['role']['v'] == 4 or user['role']['v'] == 3):
+    if(user['role']['v'] == 4):
 
         allorder = OrderTable.objects.all()
         for order in allorder:
@@ -38,7 +38,7 @@ async def read_index(request: Request):
                 'service': servicedata.title
             })
     else:
-        allorder = OrderTable.objects(userId=str(['data']['_id']['\u0024oid'])).all()
+        allorder = OrderTable.objects(userId=str(user['data']['_id']['\u0024oid'])).all()
         for order in allorder:
             finduser = UserTable.objects.get(id=ObjectId(str(order.userId)))
             touser = finduser.to_json()
