@@ -1,10 +1,40 @@
 {% extends "base.html" %} {% block title %}Client List{% endblock %} {% block
 content %}
+<style>
+  body {
+      font-family: Arial, sans-serif;
+  }
+
+  table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+  }
+
+  th,
+  td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+  }
+
+  th {
+      background-color: #f4f4f4;
+  }
+
+  input[type="text"] {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+  }
+</style>
 <header class="flex justify-between items-center mb-6">
   <h1 class="text-2xl font-bold">Client List</h1>
 </header>
 <div class="overflow-x-auto">
-  <table class="table-auto w-full border-collapse border border-gray-300">
+  <input type="text" id="searchInput" placeholder="Search in all columns..." onkeyup="searchTable()">
+  <table id="dataTable" class="table-auto w-full border-collapse border border-gray-300">
     <thead>
       <tr class="bg-gray-200">
         <th class="px-4 py-2 border border-gray-300 text-left">S.No</th>
@@ -46,4 +76,26 @@ content %}
     </tbody>
   </table>
 </div>
+<script>
+  function searchTable() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById("dataTable");
+      const rows = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < rows.length; i++) {
+          const cells = rows[i].getElementsByTagName("td");
+          let match = false;
+
+          for (let j = 0; j < cells.length; j++) {
+              if (cells[j].textContent.toLowerCase().includes(filter)) {
+                  match = true;
+                  break;
+              }
+          }
+
+          rows[i].style.display = match ? "" : "none";
+      }
+  }
+</script>
 {% endblock %}
