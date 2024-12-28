@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-TQsRiFb6ME6NxuHpYF6o5/v+Qc09osqUwO8H5e9uVOWth2aM3PG2j1Lw2k3W7CRBCyb+NYs/RlGpi5u6n91YYw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>{% block title %}Dynamic Header and Footer{% endblock %}</title>
   </head>
   <body class="bg-gray-100 min-h-screen flex">
@@ -109,9 +116,7 @@
           </li>
         </ul>
       </nav>
-      <footer class="p-4 text-center text-sm bg-gray-900">
-        © 2024 Your Company
-      </footer>
+      <footer class="p-4 text-center text-sm bg-gray-900">© 2024 UAA</footer>
     </aside>
 
     <main class="flex-grow p-6">{% block content %} {% endblock %}</main>

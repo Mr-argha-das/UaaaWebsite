@@ -1,5 +1,6 @@
 import json
 from bson import ObjectId
+from datetime import datetime
 from fastapi import FastAPI, APIRouter
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -35,7 +36,8 @@ async def read_index(request: Request):
                 'pendingamount': pendingamount,
                 'order': orderfromjson,
                 'clientName': clintdata.name,
-                'service': servicedata.title
+                'service': servicedata.title,
+                "pendingamount": order.totalorderamount - order.clientpaidAmount
             })
     else:
         allorder = OrderTable.objects(userId=str(user['data']['_id']['\u0024oid'])).all()
@@ -53,7 +55,8 @@ async def read_index(request: Request):
                 'pendingamount': pendingamount,
                 'order': orderfromjson,
                 'clientName': clintdata.name,
-                'service': servicedata.title
+                'service': servicedata.title,
+                "pendingamount": order.totalorderamount - order.clientpaidAmount
             })
     
         

@@ -29,6 +29,61 @@ content %}
     box-sizing: border-box;
   }
 </style>
+<style>
+  .pay-icon {
+    font-size: 20px;
+    color: #007bff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0px;
+  }
+  .pay-icon2 {
+    font-size: 20px;
+    color: #ff002b;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0px;
+  }
+  .pay-icon:hover {
+    color: #0056b3;
+  }
+</style>
+<style>
+  dialog {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+
+  dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  dialog form input,
+  dialog form button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  dialog form button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+
+  dialog form button:hover {
+    background-color: #0056b3;
+  }
+</style>
 <h2>Searchable Table</h2>
 <input
   type="text"
@@ -36,6 +91,7 @@ content %}
   placeholder="Search in all columns..."
   onkeyup="searchTable()"
 />
+
 <table id="dataTable">
   <thead>
     <tr>
@@ -47,10 +103,101 @@ content %}
       <th>Total INR</th>
       <th>Pending INR</th>
       <th>Deadline</th>
+      <th>Status</th>
+      <th>Pay Update</th>
     </tr>
   </thead>
   <tbody>
     {% for order in orderes %}
+    <!-- Update Payment form dialog -->
+    <dialog id="aboutDialog">
+      <form method="dialog">
+        <input
+          type="hidden"
+          id="orderid"
+          value="{{order.order['_id']['\u0024oid']}}"
+        />
+
+        <h3>Update Payment</h3>
+        <br />
+        <label for="infoField"
+          >Client Pending amount: ₹{{order.pendingamount}}</label
+        >
+
+        <input
+          type="text"
+          id="infoField"
+          name="infoField"
+          placeholder="Amount"
+          required
+        />
+        <div style="display: flex; justify-content: space-between">
+          <button
+            type="submit"
+            id="submitButton"
+            class="bg-blue-300 p-1 rounded"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="bg-red-300 p-1 rounded"
+            id="closeDialogBtn"
+          >
+            Cancel
+          </button>
+        </div>
+        <div id="responseMessage"></div>
+      </form>
+    </dialog>
+    <!-- Update status form dialog -->
+    <dialog id="aboutDialog2">
+      <form method="dialog">
+        <input
+          type="hidden"
+          id="orderid"
+          value="{{order.order['_id']['\u0024oid']}}"
+        />
+
+        <h3>Update Status</h3>
+        <br />
+        <label for="infoField"
+          >Client Pending amount: ₹{{order.pendingamount}}</label
+        >
+
+        <select
+          id="statusid"
+          name="statusid"
+          required
+          class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="" disabled selected>Select Status</option>
+
+          <option value="Pending">Pending</option>
+          <option value="In Procces">In Procces</option>
+          <option value="Deliverd">Deliverd</option>
+          <option value="Submited">Submited</option>
+        </select>
+        <br />
+        <div style="display: flex; justify-content: space-between">
+          <button
+            type="submit"
+            id="submitButton2"
+            class="bg-blue-300 p-1 rounded"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="bg-red-300 p-1 rounded"
+            id="closeDialogBtn2"
+          >
+            Cancel
+          </button>
+        </div>
+        <div id="responseMessage"></div>
+      </form>
+    </dialog>
     <tr>
       <td>{{order.order.orderNoID}}</td>
       {% if userdata.role.v == 4 or userdata.role.v == 3 %}
@@ -62,6 +209,20 @@ content %}
       <td>{{order.order.totalorderamount}}</td>
       <td>{{order.pendingamount}}</td>
       <td>{{order.order.deadline}}</td>
+      {% if order.order.status == "Pending" %}
+      <td class="text-red-500">{{order.order.status}}</td>
+      {% elif order.order.status == "In Procces" %}
+      <td class="text-yellow-500">{{order.order.status}}</td>
+      {% elif order.order.status == "Deliverd" or order.order.status ==
+      "Submited" %}
+      <td class="text-green-500">{{order.order.status}}</td>
+      {% endif %}
+      <td>
+        <button id="openDialogBtn" class="text-blue-500">Pay</button>
+        {% if userdata['role']['v'] == 4 %}
+        <button id="openDialogBtn2" class="text-red-500">| Edit</button>
+        {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </tbody>
@@ -87,5 +248,122 @@ content %}
       rows[i].style.display = match ? "" : "none";
     }
   }
+</script>
+
+<script>
+  const openDialogBtn = document.getElementById("openDialogBtn");
+  const aboutDialog = document.getElementById("aboutDialog");
+  const closeDialogBtn = document.getElementById("closeDialogBtn");
+  const submitButton = document.getElementById("submitButton");
+  // Open the dialog when the "About" button is clicked
+  openDialogBtn.addEventListener("click", () => {
+    aboutDialog.showModal();
+  });
+
+  // Close the dialog when the "Cancel" button is clicked
+  closeDialogBtn.addEventListener("click", () => {
+    aboutDialog.close();
+  });
+  submitButton.addEventListener("click", async function (e) {
+    e.preventDefault();
+    const inputField = document.getElementById("infoField");
+    console.log("hey");
+    const orderId = document.getElementById("orderid");
+    const responseMessage = document.getElementById("responseMessage");
+    try {
+      // Make the PUT request to the API
+
+      const response = await fetch("/api/v1/update-order-payment", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderId: orderId.value,
+          amount: parseInt(inputField.value),
+        }), // Convert amount to an integer
+      });
+
+      // Parse the response JSON
+      const data = await response.json();
+
+      // Display the response message
+      responseMessage.textContent = data.message;
+      responseMessage.style.color = response.ok ? "green" : "red";
+      setTimeout(() => {
+        location.reload();
+      }, 1000); // Green for success, red for errors
+    } catch (error) {
+      // Handle errors
+      responseMessage.textContent = "Error updating payment. Please try again.";
+      responseMessage.style.color = "red";
+      console.error("Error:", error);
+    }
+  });
+  // Handle the form submission
+  aboutDialog.addEventListener("close", async function (e) {
+    if (aboutDialog.returnValue === "default") {
+      // Clear the field after submission
+    }
+  });
+</script>
+
+<!-- update Status -->
+<script>
+  const openDialogBtn2 = document.getElementById("openDialogBtn2");
+  const aboutDialog2 = document.getElementById("aboutDialog2");
+  const closeDialogBtn2 = document.getElementById("closeDialogBtn2");
+  const submitButton2 = document.getElementById("submitButton2");
+  // Open the dialog when the "About" button is clicked
+  openDialogBtn2.addEventListener("click", () => {
+    aboutDialog2.showModal();
+  });
+
+  // Close the dialog when the "Cancel" button is clicked
+  closeDialogBtn2.addEventListener("click", () => {
+    aboutDialog2.close();
+  });
+  submitButton2.addEventListener("click", async function (e) {
+    e.preventDefault();
+    const inputField = document.getElementById("infoField");
+    console.log("hey");
+    const orderId = document.getElementById("orderid");
+    const responseMessage = document.getElementById("responseMessage");
+    try {
+      // Make the PUT request to the API
+
+      const response = await fetch("/api/v1/update-order-status", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          orderId: orderId.value,
+          status: document.getElementById("statusid").value,
+        }), // Convert amount to an integer
+      });
+
+      // Parse the response JSON
+      const data = await response.json();
+
+      // Display the response message
+      responseMessage.textContent = data.message;
+      responseMessage.style.color = response.ok ? "green" : "red";
+      setTimeout(() => {
+        location.reload();
+      }, 1000); // Green for success, red for errors
+    } catch (error) {
+      // Handle errors
+      responseMessage.textContent = "Error updating payment. Please try again.";
+      responseMessage.style.color = "red";
+      console.error("Error:", error);
+    }
+  });
+  // Handle the form submission
+  aboutDialog2.addEventListener("close", async function (e) {
+    if (aboutDialog.returnValue === "default") {
+      // Clear the field after submission
+    }
+  });
 </script>
 {% endblock %}

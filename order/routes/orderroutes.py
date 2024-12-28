@@ -1,5 +1,9 @@
 import json
 import shutil
+from datetime import datetime
+from bson import ObjectId
+
+from pydantic import BaseModel
 from fastapi import FastAPI, APIRouter, File, Form, UploadFile
 from pathlib import Path  # Explicit import from pathlib
 from order.models.ordermodel import OrderIdTable, OrderModel, OrderTable
@@ -19,6 +23,7 @@ async def add_order(request: Request, body: OrderModel):
         userData = request.session.get('userdata')
         orderIdData = len(OrderTable.objects.all())
         count = 000000 + orderIdData
+        cr_date = datetime.now().strftime("%d-%m-%Y")
         savedata = OrderTable(
             orderNoID=f'{generate_order_number(count+1)}',
             clintId=body.clintId,
@@ -32,13 +37,43 @@ async def add_order(request: Request, body: OrderModel):
             clientpaidAmount=body.clientpaidAmount,
             currency_type=body.currency_type,
             message=body.message,
-            filepath=body.filepath
+            filepath=body.filepath,
+            status="Pending",
+            cr_date=f"{cr_date}"
         )
         # Commit to the database
         savedata.save()
         return {"message": "Order added successfully"}
     except Exception as e:
         return {"message": str(e)}, 400
+
+class OrderPaymentModel(BaseModel):
+    orderId : str
+    amount : int
+
+class OrderStatusModel(BaseModel):
+    orderId : str
+    status : str
+
+@router.put("/api/v1/update-order-payment")
+async def upDateOrderPayment(body: OrderPaymentModel):
+    findata = OrderTable.objects.get(id=ObjectId(str(body.orderId)))
+    findata.clientpaidAmount = findata.clientpaidAmount + body.amount
+    findata.save()
+    return {
+        "message": "order payment updated",
+        "status": True
+    }
+    
+@router.put("/api/v1/update-order-status")
+async def upDateOrderStatus(body: OrderStatusModel):
+    findata = OrderTable.objects.get(id=ObjectId(str(body.orderId)))
+    findata.status =  body.status
+    findata.save()
+    return {
+        "message": "order status updated",
+        "status": True
+    }
 
 
 

@@ -17,6 +17,8 @@ class OrderTable(Document):
     totalorderamount = IntField(required=True)
     clientpaidAmount = IntField(required=True)
     filepath = StringField(required=True)
+    status = StringField(required=True)
+    cr_date = StringField(required=True)
 
 class OrderModel(BaseModel):
     clintId : str
