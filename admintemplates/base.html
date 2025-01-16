@@ -72,6 +72,7 @@
             </a>
           </li>
           {% endif %}
+          {% if context.role.name == "Manger" or context.role.name == "BDM" or context.role.name == "Admin" or context.role.name == "BDE" %}
           <li>
             <a
               href="/admin/addclient"
@@ -105,7 +106,7 @@
               <span class="material-icons mr-3">Order List </span>
             </a>
           </li>
-          
+          {% endif %}
 
           <li>
             <a
@@ -115,6 +116,7 @@
               <span class="material-icons mr-3">Log Out </span>
             </a>
           </li>
+          
         </ul>
       </nav>
       <footer class="p-4 text-center text-sm bg-gray-900">© 2024 UAA</footer>
