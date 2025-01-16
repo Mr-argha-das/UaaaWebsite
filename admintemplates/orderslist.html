@@ -109,96 +109,96 @@ content %}
   </thead>
   <tbody>
     {% for order in orderes %}
-    <!-- Update Payment form dialog -->
-    <dialog id="aboutDialog">
-      <form method="dialog">
-        <input
-          type="hidden"
-          id="orderid"
-          value="{{order.order['_id']['\u0024oid']}}"
-        />
-
-        <h3>Update Payment</h3>
-        <br />
-        <label for="infoField"
-          >Client Pending amount: ₹{{order.pendingamount}}</label
-        >
-
-        <input
-          type="text"
-          id="infoField"
-          name="infoField"
-          placeholder="Amount"
-          required
-        />
-        <div style="display: flex; justify-content: space-between">
-          <button
-            type="submit"
-            id="submitButton"
-            class="bg-blue-300 p-1 rounded"
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            class="bg-red-300 p-1 rounded"
-            id="closeDialogBtn"
-          >
-            Cancel
-          </button>
-        </div>
-        <div id="responseMessage"></div>
-      </form>
-    </dialog>
-    <!-- Update status form dialog -->
-    <dialog id="aboutDialog2">
-      <form method="dialog">
-        <input
-          type="hidden"
-          id="orderid"
-          value="{{order.order['_id']['\u0024oid']}}"
-        />
-
-        <h3>Update Status</h3>
-        <br />
-        <label for="infoField"
-          >Client Pending amount: ₹{{order.pendingamount}}</label
-        >
-
-        <select
-          id="statusid"
-          name="statusid"
-          required
-          class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        >
-          <option value="" disabled selected>Select Status</option>
-
-          <option value="Pending">Pending</option>
-          <option value="In Procces">In Procces</option>
-          <option value="Deliverd">Deliverd</option>
-          <option value="Submited">Submited</option>
-        </select>
-        <br />
-        <div style="display: flex; justify-content: space-between">
-          <button
-            type="submit"
-            id="submitButton2"
-            class="bg-blue-300 p-1 rounded"
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            class="bg-red-300 p-1 rounded"
-            id="closeDialogBtn2"
-          >
-            Cancel
-          </button>
-        </div>
-        <div id="responseMessage"></div>
-      </form>
-    </dialog>
+    
     <tr>
+      <dialog id="aboutDialog">
+        <form method="dialog">
+          <input
+            type="hidden"
+            id="orderid"
+            value="{{order.order['_id']['\u0024oid']}}"
+          />
+  
+          <h3>Update Payment</h3>
+          <br />
+          <label for="infoField"
+            >Client Pending amount: ₹{{order.pendingamount}}</label
+          >
+  
+          <input
+            type="text"
+            id="infoField"
+            name="infoField"
+            placeholder="Amount"
+            required
+          />
+          <div style="display: flex; justify-content: space-between">
+            <button
+              type="submit"
+              id="submitButton"
+              class="bg-blue-300 p-1 rounded"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="bg-red-300 p-1 rounded"
+              id="closeDialogBtn"
+            >
+              Cancel
+            </button>
+          </div>
+          <div id="responseMessage"></div>
+        </form>
+      </dialog>
+      <!-- Update status form dialog -->
+      <dialog id="aboutDialog2">
+        <form method="dialog">
+          <input
+            type="hidden"
+            id="orderid"
+            value="{{order.order['_id']['\u0024oid']}}"
+          />
+  
+          <h3>Update Status</h3>
+          <br />
+          <label for="infoField"
+            >Client Pending amount: ₹{{order.pendingamount}}</label
+          >
+  
+          <select
+            id="statusid"
+            name="statusid"
+            required
+            class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="" disabled selected>Select Status</option>
+  
+            <option value="Pending">Pending</option>
+            <option value="In Procces">In Procces</option>
+            <option value="Deliverd">Deliverd</option>
+            <option value="Submited">Submited</option>
+          </select>
+          <br />
+          <div style="display: flex; justify-content: space-between">
+            <button
+              type="submit"
+              id="submitButton2"
+              class="bg-blue-300 p-1 rounded"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              class="bg-red-300 p-1 rounded"
+              id="closeDialogBtn2"
+            >
+              Cancel
+            </button>
+          </div>
+          <div id="responseMessage"></div>
+        </form>
+      </dialog>
       <td>{{order.order.orderNoID}}</td>
       {% if userdata.role.v == 4 or userdata.role.v == 3 %}
       <td>{{order.user.name}}</td>
@@ -218,12 +218,14 @@ content %}
       <td class="text-green-500">{{order.order.status}}</td>
       {% endif %}
       <td>
-        <button id="openDialogBtn" class="text-blue-500">Pay</button>
+        
+        <button  onclick="callFuncttiopn()" class="text-blue-500">Pay</button>
         {% if userdata['role']['v'] == 4 %}
         <button id="openDialogBtn2" class="text-red-500">| Edit</button>
         {% endif %}
       </td>
     </tr>
+    
     {% endfor %}
   </tbody>
 </table>
@@ -256,10 +258,13 @@ content %}
   const closeDialogBtn = document.getElementById("closeDialogBtn");
   const submitButton = document.getElementById("submitButton");
   // Open the dialog when the "About" button is clicked
-  openDialogBtn.addEventListener("click", () => {
+  // openDialogBtn.addEventListener("click", () => {
+  //   aboutDialog.showModal();
+  // });
+  
+  function callFuncttiopn ()  {
     aboutDialog.showModal();
-  });
-
+  }
   // Close the dialog when the "Cancel" button is clicked
   closeDialogBtn.addEventListener("click", () => {
     aboutDialog.close();

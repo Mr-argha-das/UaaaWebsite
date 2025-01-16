@@ -1,12 +1,16 @@
+from datetime import datetime
 import os
+
 from dotenv import load_dotenv
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI, Form, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from mongoengine import connect
 
 from attendance.routes import attendanceroutes
 from client.routes import clientroutes
 from currency.routes import currencyroutes
-from order.routes import orderroutes
+from order.routes import orderroutes    
 from roles.routes import roloes
 from services.routes import serviceroutes
 from user.routes import userroutes
@@ -56,7 +60,40 @@ app.include_router(addorder.router, tags=["admin router"])
 app.include_router(orderroutes.router, tags=['order route'])
 app.include_router(orderlist.router, tags=['order route'])
 app.include_router(addattendance.router, tags=['admin router'])
-# app.include_router(attendanceroutes.router, tags=['admin'])
+app.include_router(attendanceroutes.router, tags=['admin'])
+employee_status = {}
+
+templates = Jinja2Templates(directory="admintemplates")
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("employeattendance.html", {"request": request, "employee_status": employee_status})
+
+
+@app.post("/check-in")
+async def check_in(employee_id: str = Form(...)):
+    current_time = datetime.now().strftime("%d-%m-%Y")
+    employee_status[employee_id] = {
+        "status": "checked-in",
+        "check_in_time": current_time,
+        "check_out_time": None,
+        "duration": 0
+    }
+    return {"message": f"Employee {employee_id} has checked in!"}
+
+# Endpoint to check-out employee
+@app.post("/check-out")
+async def check_out(employee_id: str = Form(...)):
+    if employee_id in employee_status and employee_status[employee_id]["status"] == "checked-in":
+        check_in_time = employee_status[employee_id]["check_in_time"]
+        check_out_time = datetime.now()
+        duration = (check_out_time - check_in_time).seconds // 60  # Duration in minutes
+        employee_status[employee_id]["check_out_time"] = check_out_time
+        employee_status[employee_id]["status"] = "checked-out"
+        employee_status[employee_id]["duration"] = duration
+        return {"message": f"Employee {employee_id} has checked out! Duration: {duration} minutes."}
+    return {"message": f"Employee {employee_id} is not checked in."}
+
 import uvicorn
 
 if __name__ == "__main__":
