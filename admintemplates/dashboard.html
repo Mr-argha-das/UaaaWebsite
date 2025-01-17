@@ -59,19 +59,19 @@ content %}
   </script>
 </div>
 <script>
+
   function navigateToURL() {
     localStorage.clear();
-      window.location.href = "/api/addattendance/"; // Change to your desired URL
+    window.location.href = "/api/addattendance/"; // Change to your desired URL
   }
-</script>
-<script>
+
   // Retrieve saved start time and elapsed time from localStorage
   let savedStartTime = localStorage.getItem('startTime');
   let savedElapsedTime = parseInt(localStorage.getItem('elapsedTime')) || 0;
-
   let currentStartTime = savedStartTime ? parseInt(savedStartTime) : Date.now();
+
+  // If there's no saved start time, set it to the current time
   if (!savedStartTime) {
-      // If start time is not saved, save it now
       localStorage.setItem('startTime', currentStartTime);
   }
 
@@ -81,7 +81,7 @@ content %}
   setInterval(() => {
       // Calculate the elapsed time from the saved start time
       let currentElapsedTime = Date.now() - currentStartTime + savedElapsedTime;
-      
+
       // Save the elapsed time in localStorage
       localStorage.setItem('elapsedTime', currentElapsedTime);
 
@@ -93,5 +93,6 @@ content %}
       timerElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }, 1000);  // Update every second
 </script>
+
 
 {% endblock %}
