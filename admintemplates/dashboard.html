@@ -47,10 +47,10 @@ content %}
   {% elif todaysattendance != [] and todaysattendance[0]['outtime'] == '-'%}
   <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-lg font-bold mb-4">Check Out</h2>
-    <h2 class="text-lg font-bold mb-4"><p id="timer">00:00:00</p></h2>
+    <h2 class="text-lg font-bold mb-4">Work duration <p id="timer">00:00:00</p></h2>
     <button onclick="navigateToURL()" class="text-1xl font-bold text-white bg-blue-500 p-1 rounded-lg shadow-md"><p>Check-Out</p></button>
   </div>
-  {%else %}
+  {% else %}
   <br>
   {% endif %}
   {% endif %}
@@ -60,20 +60,34 @@ content %}
 </div>
 <script>
   function navigateToURL() {
+    localStorage.clear();
       window.location.href = "/api/addattendance/"; // Change to your desired URL
   }
 </script>
 <script>
-  // Initialize timer
-  let startTime = Date.now();
+  // Retrieve saved start time and elapsed time from localStorage
+  let savedStartTime = localStorage.getItem('startTime');
+  let savedElapsedTime = parseInt(localStorage.getItem('elapsedTime')) || 0;
+
+  let currentStartTime = savedStartTime ? parseInt(savedStartTime) : Date.now();
+  if (!savedStartTime) {
+      // If start time is not saved, save it now
+      localStorage.setItem('startTime', currentStartTime);
+  }
+
   let timerElement = document.getElementById("timer");
 
   // Update the timer every second
   setInterval(() => {
-      let elapsedTime = Date.now() - startTime;  // Time elapsed in milliseconds
-      let hours = Math.floor(elapsedTime / 3600000);  // Hours
-      let minutes = Math.floor((elapsedTime % 3600000) / 60000);  // Minutes
-      let seconds = Math.floor((elapsedTime % 60000) / 1000);  // Seconds
+      // Calculate the elapsed time from the saved start time
+      let currentElapsedTime = Date.now() - currentStartTime + savedElapsedTime;
+      
+      // Save the elapsed time in localStorage
+      localStorage.setItem('elapsedTime', currentElapsedTime);
+
+      let hours = Math.floor(currentElapsedTime / 3600000);  // Hours
+      let minutes = Math.floor((currentElapsedTime % 3600000) / 60000);  // Minutes
+      let seconds = Math.floor((currentElapsedTime % 60000) / 1000);  // Seconds
 
       // Format the time as HH:MM:SS
       timerElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
