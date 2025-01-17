@@ -37,7 +37,7 @@ content %}
     <p class="text-4xl font-bold text-blue-500">{{wordcount}}</p>
   </div>
   {% endif %}
-  {% if userdata.role.name == "IT DM EX" or  userdata.role.name == "IT Maneger" or userdata.role.name =="IT Developer"or userdata.role.name =="Admin" %}
+  {% if userdata.role.name == "IT DM EX" or  userdata.role.name == "IT Maneger" or userdata.role.name =="IT Developer"or userdata.role.name =="Admin" or userdata.role.name == "BDE" or userdata.role.name == "BDM" %}
   {% if todaysattendance == [] %}
   <div class="bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-lg font-bold mb-4">Check In</h2>
